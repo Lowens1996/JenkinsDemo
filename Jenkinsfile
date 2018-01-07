@@ -4,8 +4,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'make'
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                withMaven(maven: 'Maven'){
+                    bat 'mvn clean compile'
+                }
             }
         }
          stage('Deploy') {
@@ -15,7 +16,9 @@ pipeline {
                       }
                     }
                     steps {
-                        bat 'make publish'
+                        withMaven(maven: 'Maven'){
+                            bat 'mvn deploy'
+                        }
                     }
                 }
     }
