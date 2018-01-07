@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+         stage('Build') {
             steps {
-                sh 'mvn clean compile'
-                archiveArtifacts artifacts: '**/target/*.java', fingerprint: true
-            }
-        }
+                        sh 'make'
+                    }
+         }
          stage('Deploy') {
                     when {
                       expression {
@@ -15,7 +14,7 @@ pipeline {
                       }
                     }
                     steps {
-                        bat 'make publish'
+                        sh 'make publish'
                     }
                 }
     }
