@@ -1,21 +1,15 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
     stages {
-         stage('Build') {
+        stage('Build') {
             steps {
-                        sh 'make'
-                    }
-         }
-         stage('Deploy') {
-                    when {
-                      expression {
-                        currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                      }
-                    }
-                    steps {
-                        sh 'make publish'
-                    }
-                }
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
     }
 }
