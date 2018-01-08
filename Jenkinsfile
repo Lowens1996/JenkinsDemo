@@ -6,5 +6,10 @@ pipeline {
                 bat 'mvn compile'
             }
         }
+        stage('Run unit test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
     }
 }
