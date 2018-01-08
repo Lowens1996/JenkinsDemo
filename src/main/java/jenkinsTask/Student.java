@@ -13,6 +13,7 @@ public class Student {
         if (attendance < 30) return AttendanceGrade.VERY_POOR;
         if (attendance < 70) return AttendanceGrade.AVERAGE;
         if (attendance < 90) return AttendanceGrade.GOOD;
-		return AttendanceGrade.VERY_GOOD;
+	else return AttendanceGrade.VERY_GOOD;
+		
     }
 }
