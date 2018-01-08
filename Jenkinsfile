@@ -1,15 +1,18 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-v /root/.m2:/root/.m2'
-        }
-    }
+    agent any
+
     stages {
+        def mvnHome
+        stage('Preparation') { // for display purposes
+              // Get some code from a GitHub repository
+              git 'https://github.com/Lowens1996/JenkinsDemo.git'
+              // Get the Maven tool.
+              // ** NOTE: This 'M3' Maven tool must be configured
+              // **       in the global configuration.
+              mvnHome = tool '3.5.2'
+           }
         stage('Build') {
-            steps {
-                bat 'mvn -B -DskipTests clean package'
+               bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
             }
-        }
     }
 }
